@@ -6,20 +6,27 @@ import { DemoService } from './demo.service';
 import { RouterModule, Routes } from '@angular/router';  // our custom service, see below
  
 import { AppComponent }  from './app.component';
+import { UserRoutingModule } from './user-routing.module';
 import { LinkComponent } from './link/link.component';
 
- import { userRoutingModule } from './user-routing.module';
 
 
- 
-@NgModule({
+const routes: Routes = [{
+  path: '',
+  component: AppComponent,
+  children: [
+    {
+    path: 'link/:id',
+    component: LinkComponent,
+    }
+  ],
 
-    imports: [BrowserModule, FormsModule, HttpClientModule, userRoutingModule],
-    declarations: [AppComponent, LinkComponent],
-    providers: [DemoService],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    bootstrap: [AppComponent]
-        })
-export class AppModule { }
+  }];
+  
+  @NgModule({
 
+    imports: [ RouterModule.forChild(routes)],
+    exports: [RouterModule]
+    })
 
+    export class UserRoutingModule { }
